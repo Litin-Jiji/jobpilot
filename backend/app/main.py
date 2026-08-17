@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from sqlalchemy import text
 
+from app.api.resumes import router as resumes_router
+from app.api.ai_test import router as ai_test_router
 from app.database.database import engine
 
 
@@ -9,6 +11,9 @@ app = FastAPI(
     description="Multi-Agent AI Job Application Assistant",
     version="0.1.0",
 )
+
+app.include_router(resumes_router)
+app.include_router(ai_test_router)
 
 
 @app.get("/")
