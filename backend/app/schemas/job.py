@@ -1,16 +1,18 @@
-from pydantic import BaseModel
-from typing import Optional
+from pydantic import BaseModel, Field
 
-class JobBase(BaseModel):
-    title: str
-    description: str
-    company: Optional[str] = None
 
-class JobCreate(JobBase):
-    pass
+class JobProfile(BaseModel):
+    job_title: str = ""
+    company: str = ""
 
-class JobResponse(JobBase):
-    id: int
+    required_skills: list[str] = Field(default_factory=list)
+    preferred_skills: list[str] = Field(default_factory=list)
 
-    class Config:
-        from_attributes = True
+    experience_required: str = ""
+
+    responsibilities: list[str] = Field(default_factory=list)
+
+    education_requirements: list[str] = Field(default_factory=list)
+
+    location: str = ""
+    employment_type: str = ""
