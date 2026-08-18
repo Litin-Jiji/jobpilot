@@ -4,7 +4,7 @@ from app.agents.match_agent import match_analyzer
 from app.schemas.match import MatchAnalysis
 
 
-def analyze_match(candidate_profile, job_profile):
+async def analyze_match(candidate_profile, job_profile):
 
     analysis_task = Task(
         description=f"""
@@ -60,6 +60,6 @@ Important:
         verbose=True,
     )
 
-    result = crew.kickoff()
+    result = await crew.kickoff_async()
 
     return result.pydantic

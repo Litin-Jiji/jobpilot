@@ -4,7 +4,7 @@ from app.agents.resume_agent import resume_analyst
 from app.schemas.resume import CandidateProfile
 
 
-def analyze_resume(resume_text: str):
+async def analyze_resume(resume_text: str):
 
     analysis_task = Task(
         description=f"""
@@ -45,6 +45,6 @@ Rules:
         verbose=True,
     )
 
-    result = crew.kickoff()
+    result = await crew.kickoff_async()
 
     return result.pydantic

@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+/*
+ * JobPilot AI — Design System
+ * Premium warm light theme, editorial, AI-native
+ */
+
+@theme {
+  /* ─── Background ─── */
+  --color-bg-primary: #F7F6F2;
+  --color-bg-surface: #FFFFFF;
+  --color-bg-elevated: #F1F0EC;
+  --color-bg-hover: #ECEAE5;
+  --color-bg-active: #E5E3DE;
+
+  /* ─── Borders ─── */
+  --color-border-default: #E5E3DE;
+  --color-border-subtle: #ECEAE5;
+  --color-border-hover: #D5D3CE;
+
+  /* ─── Primary (sophisticated indigo) ─── */
+  --color-primary: #5B5FEF;
+  --color-primary-hover: #4F53E0;
+  --color-primary-muted: #7577F5;
+  --color-primary-subtle: #EEEFFE;
+  --color-primary-glow: rgba(91, 95, 239, 0.08);
+
+  /* ─── Text ─── */
+  --color-text-primary: #171717;
+  --color-text-secondary: #6B6B6B;
+  --color-text-muted: #969696;
+  --color-text-inverse: #FFFFFF;
+
+  /* ─── Semantic ─── */
+  --color-success: #16A34A;
+  --color-success-muted: #EAF7EE;
+  --color-warning: #D97706;
+  --color-warning-muted: #FFF4DF;
+  --color-error: #DC2626;
+  --color-error-muted: #FDECEC;
+
+  /* ─── Typography ─── */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+
+  /* ─── Spacing ─── */
+  --spacing-page: 2rem;
+
+  /* ─── Radius ─── */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-full: 9999px;
+}
+
+/* ─── Base ─── */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  line-height: 1.6;
+}
+
+/* ─── Scrollbar ─── */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-default);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-border-hover);
+}
+
+/* ─── Selection ─── */
+
+::selection {
+  background: var(--color-primary-subtle);
+  color: var(--color-text-primary);
+}
+
+/* ─── Focus ring ─── */
+
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ─── Animations ─── */
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.8); opacity: 1; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 25%,
+    var(--color-primary-subtle) 50%,
+    transparent 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s ease-in-out infinite;
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+
+/* ─── Utility: text gradient ─── */
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--color-primary) 0%, #8B5CF6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

@@ -4,12 +4,11 @@ from app.agents.optimizer_agent import resume_optimizer
 from app.schemas.optimization import ResumeOptimization
 
 
-def optimize_resume(
+async def optimize_resume(
     candidate_profile,
     job_profile,
     match_analysis,
 ):
-
     optimization_task = Task(
         description=f"""
 Optimize the candidate's resume for the target job.
@@ -23,40 +22,39 @@ JOB PROFILE:
 MATCH ANALYSIS:
 {match_analysis.model_dump_json(indent=2)}
 
-Your objectives:
+Your task is to generate honest, ATS-friendly resume improvements.
 
-1. Rewrite the professional summary to align with the target role.
-2. Improve existing experience bullets for clarity and ATS relevance.
-3. Identify keywords from the job description that are already supported
-   by the candidate's experience.
-4. Identify skills that should be highlighted more prominently.
-5. Recommend ATS improvements.
-6. Preserve factual accuracy.
+Requirements:
 
-STRICT RULES:
+1. Create an optimized professional summary tailored to the target role.
+2. Improve the candidate's existing experience bullets.
+3. Do not invent technologies, projects, responsibilities, metrics,
+   companies, achievements, or experience.
+4. Only add keywords when they are genuinely supported by the
+   candidate profile or match analysis.
+5. Identify important keywords that should be emphasized.
+6. Identify skills that should be highlighted.
+7. Provide practical recommendations for improving the resume.
+8. Provide ATS-specific improvements.
+9. Preserve the original meaning and factual accuracy of the candidate's
+   experience.
+10. If a bullet is already strong, improve it only when there is a clear
+    benefit for ATS alignment.
 
-- Never invent work experience.
-- Never invent skills.
-- Never invent companies.
-- Never invent certifications.
-- Never invent metrics.
-- Never claim the candidate has a missing skill.
-- Only rewrite or emphasize information already supported by the
-  candidate profile.
-- Missing skills should be reported as recommendations rather than
-  added to the resume.
-- Preserve the candidate's actual experience and background.
-
-The optimized resume should be targeted specifically toward the
-provided job profile.
+Return a structured resume optimization.
 """,
-        expected_output=(
-            "A complete ResumeOptimization containing an optimized "
-            "professional summary, improved resume bullets, ATS keywords, "
-            "skills to highlight, recommendations, and ATS improvements."
-        ),
-        output_pydantic=ResumeOptimization,
+        expected_output="""
+A structured resume optimization containing:
+
+- optimized_summary
+- optimized_bullets
+- keywords_to_emphasize
+- skills_to_highlight
+- recommendations
+- ats_improvements
+""",
         agent=resume_optimizer,
+        output_pydantic=ResumeOptimization,
     )
 
     crew = Crew(
@@ -66,6 +64,6 @@ provided job profile.
         verbose=True,
     )
 
-    result = crew.kickoff()
+    result = await crew.kickoff_async()
 
     return result.pydantic

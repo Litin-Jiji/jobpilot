@@ -4,7 +4,7 @@ from app.agents.jd_agent import jd_analyzer
 from app.schemas.job import JobProfile
 
 
-def analyze_job_description(job_description: str):
+async def analyze_job_description(job_description: str):
 
     analysis_task = Task(
         description=f"""
@@ -47,6 +47,6 @@ Rules:
         verbose=True,
     )
 
-    result = crew.kickoff()
+    result = await crew.kickoff_async()
 
     return result.pydantic
